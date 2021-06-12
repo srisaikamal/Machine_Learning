@@ -5,8 +5,6 @@ from flask import request
 # Machine Learning Imports
 import numpy as np
 import pandas as pd
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -35,7 +33,6 @@ def machineLearningAlog():
     slp = data["slp"]
     cia = data["cia"]
     thall = data["thall"]
-    itter = data["itter"]
 
     predictors = dataset.drop("output",axis=1)
     target = dataset["output"]
@@ -44,8 +41,7 @@ def machineLearningAlog():
     max_accuracy = 0
 
 
-    for x in range(itter):
-        print(x)
+    for x in range(100):
         rf = RandomForestClassifier(random_state=x)
         rf.fit(X_train,Y_train)
         Y_pred_rf = rf.predict(X_test)
