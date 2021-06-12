@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import jsonify
 from flask import request
-app = Flask(__name__)
+machineLearningAlog = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def machineLearningAlog():
