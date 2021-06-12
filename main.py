@@ -41,7 +41,8 @@ def machineLearningAlog():
     max_accuracy = 0
 
 
-    for x in range(100):
+    for x in range(2):
+        print(x)
         rf = RandomForestClassifier(random_state=x)
         rf.fit(X_train,Y_train)
         Y_pred_rf = rf.predict(X_test)
@@ -53,12 +54,11 @@ def machineLearningAlog():
     rf = RandomForestClassifier(random_state=best_x)
     rf.fit(X_train,Y_train)
 
+    Y_pred_rf = rf.predict(X_test)
+
+
+    score_rf = round(accuracy_score(Y_test,Y_pred_rf)*100,2)
     Y_pred_rf = rf.predict([[age,sex,cp,trt_bps,chol,fbs,restecg,thalachh,exng,old_peaks,slp,cia,thall]])
-
-    # Y_pred_rf = rf.predict([[56,1,0,126,249,1,0,144,1,1.2,1,1,2]])
-
-
     finalOutput = str(Y_pred_rf[0])
 
-
-    return jsonify({"output":finalOutput})
+    return jsonify({"output":finalOutput, "accuracy":score_rf})
