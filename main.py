@@ -33,6 +33,7 @@ def machineLearningAlog():
     slp = data["slp"]
     cia = data["cia"]
     thall = data["thall"]
+    itter = data["itter"]
 
     predictors = dataset.drop("output",axis=1)
     target = dataset["output"]
@@ -41,8 +42,7 @@ def machineLearningAlog():
     max_accuracy = 0
 
 
-    for x in range(2):
-        print(x)
+    for x in range(itter):
         rf = RandomForestClassifier(random_state=x)
         rf.fit(X_train,Y_train)
         Y_pred_rf = rf.predict(X_test)
