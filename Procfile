@@ -1,1 +1,1 @@
-web: gunicorn main:machineLearningAlog
+web: gunicorn main:app
