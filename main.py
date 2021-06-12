@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import accuracy_score
 
 
 app = Flask(__name__)
@@ -22,20 +22,30 @@ def machineLearningAlog():
     data = request.get_json('data')
 
 
+    age = data['age']
+    sex = data['sex']
+    cp = data['cp']
+    trt_bps = data['trt_bps']
+    chol = data['chol']
+    fbs =data["fbs"]
+    restecg = data["restecg"]
+    thalachh = data["thalachh"]
+    exng = data["exng"]
+    old_peaks = data["old_peaks"]
+    slp = data["slp"]
+    cia = data["cia"]
+    thall = data["thall"]
+    itter = data["itter"]
 
     predictors = dataset.drop("output",axis=1)
-    #print(predictors)---> drops the output column and prints remaining columns
     target = dataset["output"]
-    #print(target)----> only gives the output column
     X_train,X_test,Y_train,Y_test = train_test_split(predictors,target,test_size=0.1,random_state=0)
-
-
-
 
     max_accuracy = 0
 
 
-    for x in range(2000):
+    for x in range(itter):
+        print(x)
         rf = RandomForestClassifier(random_state=x)
         rf.fit(X_train,Y_train)
         Y_pred_rf = rf.predict(X_test)
@@ -43,23 +53,16 @@ def machineLearningAlog():
         if(current_accuracy>max_accuracy):
             max_accuracy = current_accuracy
             best_x = x
-        
-#print(max_accuracy)
-#print(best_x)
-
+   
     rf = RandomForestClassifier(random_state=best_x)
     rf.fit(X_train,Y_train)
-    Y_pred_rf = rf.predict(X_test)
+
+    Y_pred_rf = rf.predict([[age,sex,cp,trt_bps,chol,fbs,restecg,thalachh,exng,old_peaks,slp,cia,thall]])
+
+    # Y_pred_rf = rf.predict([[56,1,0,126,249,1,0,144,1,1.2,1,1,2]])
 
 
-    name = data['name']
-    email = data['email']
-    success=""
-    
-    if name == "kamal" and email == "kamal@gmail.com":
-        success = 'Login Successfull'
-    else:
-        success = 'Login Failed'
+    finalOutput = str(Y_pred_rf[0])
 
 
-    return jsonify({success:Y_pred_rf})
+    return jsonify({"output":finalOutput})
