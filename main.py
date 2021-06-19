@@ -41,7 +41,7 @@ def machineLearningAlog():
 
     predictors = dataset.drop("output",axis=1)
     target = dataset["output"]
-    X_train,X_test,Y_train,Y_test = train_test_split(predictors,target,test_size=0.1,random_state=0)
+    X_train,X_test,Y_train,Y_test = train_test_split(predictors,target,test_size=0.2,random_state=0)
 
 
 
@@ -62,7 +62,7 @@ def machineLearningAlog():
 
     def randomClassifier():
         max_accuracy = 0
-        for x in range(15):
+        for x in range(10):
             rf = RandomForestClassifier(random_state=x)
             rf.fit(X_train,Y_train)
             Y_pred_rf = rf.predict(X_test)
@@ -81,7 +81,7 @@ def machineLearningAlog():
 
 
     def KNN():
-        knn=KNeighborsClassifier(n_neighbors=20)
+        knn=KNeighborsClassifier(n_neighbors=21)
         knn.fit(X_train,Y_train) 
         Y_pred_knn = knn.predict(X_test)
         score_knn = round(accuracy_score(Y_test,Y_pred_knn)*100,2)
